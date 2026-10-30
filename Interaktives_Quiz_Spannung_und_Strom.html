@@ -1,0 +1,530 @@
+Interaktives Quiz: Spannung und Stromstärke (ohne Widerstand)
+Hinweis
+Kopiere den folgenden Code in eine neue Datei namens „quiz_spannung_strom.html“ und öffne sie im Browser. Es ist eine einzelne, lauffähige HTML-Datei ohne externe Bibliotheken.
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz: Spannung und Stromstärke</title>
+  <style>
+    :root{
+      --bg:#f7fafc;
+      --card:#ffffff;
+      --ink:#1a202c;
+      --muted:#4a5568;
+      --accent:#2563eb;
+      --good:#16a34a;
+      --bad:#dc2626;
+      --warn:#d97706;
+      --border:#e2e8f0;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Noto Sans",sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.4;
+    }
+    header{
+      padding:20px 16px 8px;
+      text-align:center;
+    }
+    header h1{
+      font-size:1.4rem;
+      margin:0 0 6px;
+    }
+    header p{margin:0;color:var(--muted)}
+    main{
+      max-width:900px;
+      margin:0 auto;
+      padding:16px;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:16px;
+      margin:12px 0;
+      box-shadow:0 1px 2px rgba(0,0,0,0.04);
+    }
+    .task-header{
+      display:flex;gap:8px;align-items:center;margin-bottom:8px
+    }
+    .badge{
+      font-size:.8rem;
+      background:#eef2ff;
+      color:var(--accent);
+      padding:2px 8px;
+      border-radius:999px;
+      border:1px solid #dbeafe;
+    }
+    h2{font-size:1.05rem;margin:0}
+    .small{color:var(--muted);font-size:.95rem}
+    .grid{
+      display:grid;gap:10px
+    }
+    @media(min-width:720px){
+      .grid.cols-2{grid-template-columns:1fr 1fr}
+      .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    }
+    input[type="text"], select{
+      width:100%;
+      padding:8px 10px;
+      border:1px solid var(--border);
+      border-radius:8px;
+      font-size:1rem;
+      background:white;
+    }
+    .pair{
+      display:flex;gap:8px;align-items:center
+    }
+    .pair select{flex:1}
+    .pair .label{flex:1}
+    .options{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+    .opt{
+      padding:6px 10px;border:1px dashed var(--border);border-radius:8px;color:var(--muted);font-size:.95rem
+    }
+    .katex-like{font-family:"Cambria Math","STIX Two Math",serif}
+    button{
+      appearance:none;border:0;background:var(--accent);color:white;
+      padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600
+    }
+    button.secondary{background:#64748b}
+    .controls{
+      display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:10px
+    }
+    .result{
+      margin-top:10px;font-weight:700
+    }
+    .ok{color:var(--good)}
+    .bad{color:var(--bad)}
+    .hint{color:var(--warn);font-size:.95rem;margin-top:6px}
+    .inline-blank{
+      min-width:3ch;display:inline-block;border-bottom:2px dotted var(--border);
+      padding:0 4px;margin:0 2px
+    }
+    .table{
+      width:100%;border-collapse:collapse;margin-top:8px
+    }
+    .table th,.table td{
+      border:1px solid var(--border);padding:8px;text-align:left
+    }
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Abschluss-Quiz: Spannung (Volt) und Stromstärke (Ampere)</h1>
+    <p>Merksatz: Spannung treibt – Strom fließt. Einheit: U in Volt (V), I in Ampere (A).</p>
+  </header>
+  <main>
+
+    <!-- Aufgabe 1: Lückentext -->
+    <section class="card" id="t1" data-task="fill">
+      <div class="task-header">
+        <span class="badge">Aufgabe 1</span>
+        <h2>Lückentext: Begriffe und Einheiten</h2>
+      </div>
+      <p class="small">
+        Fülle die Lücken. Schreibe nur das gesuchte Wort/Buchstaben (z. B. Volt, Ampere, U, I).
+      </p>
+      <p>
+        a) Spannung beschreibt, <span class="muted">(wie stark / wie viele pro Zeit)</span> die Elektronen angetrieben werden: 
+        <span class="inline-blank"><input type="text" data-a="wie stark" /></span>.
+      </p>
+      <p>
+        b) Die Einheit der Spannung ist 
+        <span class="inline-blank"><input type="text" data-a="volt" /></span> (Schreibweise: 
+        <span class="inline-blank"><input type="text" data-a="v" /></span>), das Formelzeichen ist 
+        <span class="inline-blank"><input type="text" data-a="u" /></span>.
+      </p>
+      <p>
+        c) Die <span class="inline-blank"><input type="text" data-a="stromstärke" /></span> 
+        gibt an, wie viele Elektronen pro Zeit an einem Punkt vorbeiströmen.
+      </p>
+      <p>
+        d) Die Einheit der Stromstärke ist 
+        <span class="inline-blank"><input type="text" data-a="ampere" /></span> (Schreibweise: 
+        <span class="inline-blank"><input type="text" data-a="a" /></span>), das Formelzeichen ist 
+        <span class="inline-blank"><input type="text" data-a="i" /></span>.
+      </p>
+      <div class="controls">
+        <button onclick="checkFill('t1')">Prüfen</button>
+        <button class="secondary" onclick="resetTask('t1')">Zurücksetzen</button>
+      </div>
+      <div class="result" id="r-t1"></div>
+    </section>
+
+    <!-- Aufgabe 2: Zuordnung Begriffe -->
+    <section class="card" id="t2" data-task="match">
+      <div class="task-header">
+        <span class="badge">Aufgabe 2</span>
+        <h2>Zuordnung: Begriffe und Beschreibungen</h2>
+      </div>
+      <div class="grid">
+        <div class="pair">
+          <div class="label">Spannung</div>
+          <select data-a="antrieb">
+            <option value="">— wählen —</option>
+            <option value="antrieb">„Antrieb“ der Elektronen</option>
+            <option value="anzahl">„Wie viele pro Zeit“</option>
+          </select>
+        </div>
+        <div class="pair">
+          <div class="label">Stromstärke</div>
+          <select data-a="anzahl">
+            <option value="">— wählen —</option>
+            <option value="antrieb">„Antrieb“ der Elektronen</option>
+            <option value="anzahl">„Wie viele pro Zeit“</option>
+          </select>
+        </div>
+        <div class="pair">
+          <div class="label">Einheit Volt</div>
+          <select data-a="volt">
+            <option value="">— wählen —</option>
+            <option value="volt">V</option>
+            <option value="ampere">A</option>
+          </select>
+        </div>
+        <div class="pair">
+          <div class="label">Einheit Ampere</div>
+          <select data-a="ampere">
+            <option value="">— wählen —</option>
+            <option value="volt">V</option>
+            <option value="ampere">A</option>
+          </select>
+        </div>
+      </div>
+      <div class="controls">
+        <button onclick="checkMatch('t2')">Prüfen</button>
+        <button class="secondary" onclick="resetTask('t2')">Zurücksetzen</button>
+      </div>
+      <div class="result" id="r-t2"></div>
+    </section>
+
+    <!-- Aufgabe 3: Reihenschaltung – gleiche Stromstärke -->
+    <section class="card" id="t3" data-task="single">
+      <div class="task-header">
+        <span class="badge">Aufgabe 3</span>
+        <h2>Reihenschaltung: Verhalten von Stromstärke</h2>
+      </div>
+      <p>In einer Reihenschaltung (ein einziger Weg) gilt:</p>
+      <div>
+        <label><input type="radio" name="t3" value="a"> Die Stromstärke wird hinter jeder Lampe kleiner.</label><br/>
+        <label><input type="radio" name="t3" value="b"> Die Stromstärke ist an jeder Stelle gleich.</label><br/>
+        <label><input type="radio" name="t3" value="c"> Die Stromstärke ist zufällig.</label>
+      </div>
+      <div class="controls">
+        <button onclick="checkSingle('t3','b')">Prüfen</button>
+        <button class="secondary" onclick="resetTask('t3')">Zurücksetzen</button>
+      </div>
+      <div class="result" id="r-t3"></div>
+    </section>
+
+    <!-- Aufgabe 4: Parallelschaltung – gleiche Spannung -->
+    <section class="card" id="t4" data-task="single">
+      <div class="task-header">
+        <span class="badge">Aufgabe 4</span>
+        <h2>Parallelschaltung: Verhalten der Spannung</h2>
+      </div>
+      <p>In einer Parallelschaltung (mehrere Wege) gilt:</p>
+      <div>
+        <label><input type="radio" name="t4" value="a"> Der obere Zweig hat mehr Spannung.</label><br/>
+        <label><input type="radio" name="t4" value="b"> Spannung teilt sich in Zweigen beliebig auf.</label><br/>
+        <label><input type="radio" name="t4" value="c"> Jeder Zweig hat die gleiche Spannung wie die Quelle.</label>
+      </div>
+      <div class="controls">
+        <button onclick="checkSingle('t4','c')">Prüfen</button>
+        <button class="secondary" onclick="resetTask('t4')">Zurücksetzen</button>
+      </div>
+      <div class="result" id="r-t4"></div>
+    </section>
+
+    <!-- Aufgabe 5: Zahlenwerte – Spannungen addieren (Batterien in Reihe) -->
+    <section class="card" id="t5" data-task="numeric">
+      <div class="task-header">
+        <span class="badge">Aufgabe 5</span>
+        <h2>Angaben: Spannung bei Batterien in Reihe</h2>
+      </div>
+      <p>Du hast AA-Zellen mit 1,5 V. Trage die Gesamtspannung ein (nur Zahl oder mit V).</p>
+      <div class="grid cols-3">
+        <div>
+          <div class="small">1 Batterie</div>
+          <input type="text" placeholder="…" data-a="1.5v">
+        </div>
+        <div>
+          <div class="small">2 Batterien in Reihe</div>
+          <input type="text" placeholder="…" data-a="3v">
+        </div>
+        <div>
+          <div class="small">3 Batterien in Reihe</div>
+          <input type="text" placeholder="…" data-a="4.5v">
+        </div>
+      </div>
+      <div class="controls">
+        <button onclick="checkNumeric('t5')">Prüfen</button>
+        <button class="secondary" onclick="resetTask('t5')">Zurücksetzen</button>
+      </div>
+      <div class="result" id="r-t5"></div>
+    </section>
+
+    <!-- Aufgabe 6: Szenario – Reihenschaltung vs. Parallel (qualitativ) -->
+    <section class="card" id="t6" data-task="single">
+      <div class="task-header">
+        <span class="badge">Aufgabe 6</span>
+        <h2>Szenario: Helligkeit und Aussage</h2>
+      </div>
+      <p>Du hast zwei identische Lampen.</p>
+      <ol>
+        <li>Zwei Lampen in Reihe an einer Batterie: Jede Lampe leuchtet eher …</li>
+      </ol>
+      <div>
+        <label><input type="radio" name="t6a" value="a"> heller als eine Einzellampe</label><br/>
+        <label><input type="radio" name="t6a" value="b"> dunkler als eine Einzellampe</label><br/>
+        <label><input type="radio" name="t6a" value="c"> genau gleich hell</label>
+      </div>
+      <ol start="2">
+        <li>Zwei Lampen parallel an derselben Batterie: Jede Lampe leuchtet …</li>
+      </ol>
+      <div>
+        <label><input type="radio" name="t6b" value="a"> ungefähr so hell wie eine Einzellampe</label><br/>
+        <label><input type="radio" name="t6b" value="b"> deutlich dunkler</label><br/>
+        <label><input type="radio" name="t6b" value="c"> gar nicht</label>
+      </div>
+      <div class="controls">
+        <button onclick="checkDualSingle('t6', {a:'b', b:'a'})">Prüfen</button>
+        <button class="secondary" onclick="resetTask('t6')">Zurücksetzen</button>
+      </div>
+      <div class="result" id="r-t6"></div>
+      <div class="hint">Begründung: Reihenschaltung = ein Weg, gleiche Stromstärke durch beide; Parallelschaltung = gleiche Spannung an jedem Zweig.</div>
+    </section>
+
+    <!-- Aufgabe 7: Knobel – Was passiert bei Unterbrechung? -->
+    <section class="card" id="t7" data-task="single">
+      <div class="task-header">
+        <span class="badge">Aufgabe 7</span>
+        <h2>Unterbrechung in Reihe oder parallel?</h2>
+      </div>
+      <p>Du schraubst eine Lampe heraus. Was passiert?</p>
+      <div>
+        <label><input type="radio" name="t7" value="a"> Reihenschaltung: andere leuchten weiter; Parallelschaltung: alle aus.</label><br/>
+        <label><input type="radio" name="t7" value="b"> In beiden Schaltungen leuchten die anderen weiter.</label><br/>
+        <label><input type="radio" name="t7" value="c"> Reihenschaltung: alle Lampen aus; Parallelschaltung: die anderen leuchten weiter.</label>
+      </div>
+      <div class="controls">
+        <button onclick="checkSingle('t7','c')">Prüfen</button>
+        <button class="secondary" onclick="resetTask('t7')">Zurücksetzen</button>
+      </div>
+      <div class="result" id="r-t7"></div>
+    </section>
+
+    <!-- Aufgabe 8: Parallelschaltung – Gesamtstrom aufteilen -->
+    <section class="card" id="t8" data-task="numeric-split">
+      <div class="task-header">
+        <span class="badge">Aufgabe 8</span>
+        <h2>Angaben: Stromaufteilung in der Parallelschaltung</h2>
+      </div>
+      <p>
+        Die Batterie liefert am Knoten insgesamt 0,6 A. Es gibt zwei identische parallele Zweige.
+        Trage sinnvolle Werte ein: I(Zweig 1), I(Zweig 2), I(gesamt).
+        (Nur Zahlen oder mit A)
+      </p>
+      <div class="grid cols-3">
+        <div>
+          <div class="small">I(Zweig 1)</div>
+          <input type="text" placeholder="…" data-a="0.3a">
+        </div>
+        <div>
+          <div class="small">I(Zweig 2)</div>
+          <input type="text" placeholder="…" data-a="0.3a">
+        </div>
+        <div>
+          <div class="small">I(gesamt)</div>
+          <input type="text" placeholder="…" data-a="0.6a">
+        </div>
+      </div>
+      <div class="controls">
+        <button onclick="checkNumeric('t8')">Prüfen</button>
+        <button class="secondary" onclick="resetTask('t8')">Zurücksetzen</button>
+      </div>
+      <div class="result" id="r-t8"></div>
+      <div class="hint">Merke: In der Parallelschaltung teilt sich die Gesamtstromstärke auf die Zweige auf und addiert sich am Knoten wieder.</div>
+    </section>
+
+    <!-- Gesamtbewertung -->
+    <section class="card" id="summary">
+      <div class="task-header">
+        <span class="badge">Auswertung</span>
+        <h2>Gesamtpunktzahl</h2>
+      </div>
+      <p class="small">Klicke auf „Alles prüfen“, um alle Aufgaben auf einmal auszuwerten.</p>
+      <div class="controls">
+        <button onclick="checkAll()">Alles prüfen</button>
+        <button class="secondary" onclick="resetAll()">Alles zurücksetzen</button>
+      </div>
+      <div class="result" id="r-all"></div>
+    </section>
+  </main>
+
+  <script>
+    // Hilfsfunktionen
+    function normalize(s){
+      if(!s) return "";
+      return s.toString().trim().toLowerCase()
+        .replaceAll(" ", "")
+        .replaceAll(",", ".")
+        .replaceAll("volt","v")
+        .replaceAll("ampere","a");
+    }
+    function feedbackOK(el,msg){ el.innerHTML = '<span class="ok">✔ ' + msg + '</span>'; }
+    function feedbackBAD(el,msg){ el.innerHTML = '<span class="bad">✘ ' + msg + '</span>'; }
+
+    function checkFill(id){
+      const box = document.getElementById(id);
+      const inputs = box.querySelectorAll('input[type="text"]');
+      let score=0, total=inputs.length;
+      inputs.forEach(inp=>{
+        const expectedRaw = (inp.dataset.a||"").toLowerCase();
+        const expectedList = expectedRaw.split("|").map(x=>x.trim());
+        const val = normalize(inp.value);
+        const good = expectedList.some(exp=>{
+          const nExp = normalize(exp);
+          // Spezialfälle: akzeptiere „wie stark“ / „stark“; „stromstärke“ / „strom“
+          if(nExp==="wiestark" && (val==="wiestark" || val==="stark")) return true;
+          if(nExp==="stromstärke" && (val==="stromstärke" || val==="strom")) return true;
+          return val===nExp;
+        });
+        inp.style.borderColor = good ? "#16a34a" : "#dc2626";
+        score += good?1:0;
+      });
+      const r = document.getElementById('r-'+id);
+      if(score===total) feedbackOK(r, "Alles richtig! ("+score+"/"+total+")");
+      else feedbackBAD(r, "Richtig: "+score+" von "+total);
+      return {score,total};
+    }
+
+    function checkMatch(id){
+      const box = document.getElementById(id);
+      const selects = box.querySelectorAll('select');
+      let score=0, total=selects.length;
+      selects.forEach(sel=>{
+        const val = sel.value;
+        const exp = sel.dataset.a;
+        const good = val===exp;
+        sel.style.borderColor = good ? "#16a34a" : "#dc2626";
+        score += good?1:0;
+      });
+      const r = document.getElementById('r-'+id);
+      if(score===total) feedbackOK(r, "Super, alles korrekt! ("+score+"/"+total+")");
+      else feedbackBAD(r, "Korrekt: "+score+" von "+total);
+      return {score,total};
+    }
+
+    function checkSingle(id,correct){
+      const box = document.getElementById(id);
+      const name = box.querySelector('input[type="radio"]').name;
+      const checked = box.querySelector('input[name="'+name+'"]:checked');
+      const r = document.getElementById('r-'+id);
+      if(!checked){ feedbackBAD(r, "Bitte wähle eine Antwort."); return {score:0,total:1}; }
+      if(checked.value===correct){ feedbackOK(r, "Richtig!"); return {score:1,total:1}; }
+      feedbackBAD(r, "Leider falsch.");
+      return {score:0,total:1};
+    }
+
+    function checkDualSingle(id, answers){
+      const box = document.getElementById(id);
+      const a = box.querySelector('input[name="'+id+'a"]:checked');
+      const b = box.querySelector('input[name="'+id+'b"]:checked');
+      const r = document.getElementById('r-'+id);
+      let score=0,total=2;
+      if(a && a.value===answers.a) score++;
+      if(b && b.value===answers.b) score++;
+      if(!a || !b) { feedbackBAD(r, "Bitte beide Teile beantworten. ("+score+"/"+total+")"); }
+      else if(score===2) feedbackOK(r, "Beide Antworten richtig! (2/2)");
+      else feedbackBAD(r, "Teilweise korrekt. ("+score+"/2)");
+      return {score,total};
+    }
+
+    function parseNumber(s){
+      const n = normalize(s);
+      // Erlaubt: 1.5, 1.5v, 0.3a, 3, 3.0V
+      const m = n.match(/^([0-9]+(\.[0-9]+)?)\s*([va])?$/i);
+      if(!m) return null;
+      return {value: parseFloat(m[1]), unit: (m[3]||"")};
+    }
+
+    function checkNumeric(id){
+      const box = document.getElementById(id);
+      const inputs = box.querySelectorAll('input[type="text"]');
+      let score=0, total=inputs.length;
+      inputs.forEach(inp=>{
+        const exp = normalize(inp.dataset.a); // z.B. "3v" oder "0.3a"
+        const parsed = parseNumber(inp.value);
+        let good=false;
+        if(parsed){
+          const expM = exp.match(/^([0-9]+(\.[0-9]+)?)\s*([va])$/);
+          if(expM){
+            const ev = parseFloat(expM[1]);
+            const eu = expM[3];
+            // Akzeptiere +/- 0.01 Toleranz
+            const close = Math.abs(parsed.value - ev) < 0.011;
+            const unitOK = (parsed.unit==="" || parsed.unit===eu);
+            good = close && unitOK;
+          }
+        }
+        inp.style.borderColor = good ? "#16a34a" : "#dc2626";
+        score += good?1:0;
+      });
+      const r = document.getElementById('r-'+id);
+      if(score===total) feedbackOK(r, "Alles korrekt! ("+score+"/"+total+")");
+      else feedbackBAD(r, "Korrekt: "+score+" von "+total);
+      return {score,total};
+    }
+
+    function resetTask(id){
+      const box = document.getElementById(id);
+      box.querySelectorAll('input[type="text"]').forEach(inp=>{
+        inp.value=""; inp.style.borderColor="#e2e8f0";
+      });
+      box.querySelectorAll('select').forEach(sel=>{
+        sel.value=""; sel.style.borderColor="#e2e8f0";
+      });
+      const radios = box.querySelectorAll('input[type="radio"]');
+      const names = new Set();
+      radios.forEach(r=> names.add(r.name));
+      names.forEach(n=> {
+        const checked = box.querySelector('input[name="'+n+'"]:checked');
+        if(checked) checked.checked=false;
+      });
+      const r = document.getElementById('r-'+id);
+      if(r) r.textContent="";
+    }
+
+    function checkAll(){
+      let sum=0, total=0;
+      const res = [];
+      res.push(checkFill('t1'));
+      res.push(checkMatch('t2'));
+      res.push(checkSingle('t3','b'));
+      res.push(checkSingle('t4','c'));
+      res.push(checkNumeric('t5'));
+      res.push(checkDualSingle('t6', {a:'b', b:'a'}));
+      res.push(checkSingle('t7','c'));
+      res.push(checkNumeric('t8'));
+      res.forEach(o=>{ sum+=o.score; total+=o.total; });
+      const r = document.getElementById('r-all');
+      if(sum===total) feedbackOK(r, "Perfekt! Gesamt: "+sum+" / "+total);
+      else r.innerHTML = '<span class="'+(sum/total>=0.6?'ok':'bad')+'">Gesamt: '+sum+' / '+total+'</span>';
+      window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});
+    }
+
+    function resetAll(){
+      ['t1','t2','t3','t4','t5','t6','t7','t8'].forEach(resetTask);
+      document.getElementById('r-all').textContent="";
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  </script>
+</body>
+</html>
